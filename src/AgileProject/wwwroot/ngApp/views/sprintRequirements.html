@@ -1,0 +1,151 @@
+﻿<div class="col-xs-2">
+</div>
+<div class="col-xs-8">
+        <div class="jumbotron">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>Project:</th>
+                        <th>{{controller.sprintRequirements.project.projectName}}</th>
+                    </tr>
+                    <tr>
+                        <th>Sprint:</th>
+                        <th>{{controller.sprintRequirements.sprintName}}</th>
+                    </tr>
+                    <tr>
+                        <th>Stories:</th>
+                        <th>Status</th>
+                        <th>Description</th>
+                        <th>AcceptanceCriteria</th>
+                    </tr>
+                </thead>
+                <tbody id='table'>
+                    <tr ng-repeat="req in controller.sprintRequirements.requirements">
+                        <td><a ui-sref="tasks ({id:req.id})">{{req.requirementName}}</a></td>
+                        <td>{{req.status.condition}}</td>
+                        <td><a data-toggle="modal" data-target="#modalDescription" ng-click="controller.preFillReqForm(req.id)">Description</a></td>
+                        <td><a data-toggle="modal" data-target="#modalAcceptanceCriteria" ng-click="controller.preFillReqForm(req.id)">AcceptanceCriteria</a></td>
+                        <td><button class="btn-sm btn-success" data-toggle="modal" data-target="#modalEditAdd" ng-click="controller.preFillReqForm(req.id)">Edit</button></td>
+                        <td><button class="btn-sm btn-danger"  data-toggle="modal" data-target="#modalDeleteWarningContainer" ng-click="controller.preFillReqForm(req.id)">Delete</button></td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td><button class="btn btn-success" data-toggle="modal" data-target="#modalEditAdd" ng-click="controller.clearForm()">Add Story</button></td>
+                    </tr>                                                                             <!--ng-click="controller.preFillReqForm(req.id)"-->
+                </tfoot>
+            </table>
+        </div>
+
+
+    <div id="modalDescription" class="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <p style="font-size:large"><strong>Story description:</strong> {{controller.req.description}}</p>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalAcceptanceCriteria" class="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <p style="font-size:large"><strong>Story acceptance criteria:</strong> {{controller.req.acceptanceCriteria}}</p>
+                <div class="modal-footer">
+                    <button class="btn btn-default"  data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+        <div id="modalDeleteWarningContainer" class="modal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <h4>Are you sure you want to delete? "{{controller.req.requirementName}}"</h4>
+                    <div class="modal-body">
+                        <button class="btn btn-danger" ng-click="controller.deleteRequirement(controller.req.id)" data-dismiss="modal">Continue</button>
+                        <a class="btn btn-default" data-dismiss="modal" href="">Cancel</a>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+            <div id="modalEditAdd" class="modal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-body">
+
+                            <h1>Story Form</h1>
+                            <form id=addForm>
+                                <div class="form-group">
+                                    <label>Sprint:</label>
+                                    <select required class="form-control" ng-model="controller.req.sprint.id" ng-options="cat.id as cat.sprintName for cat in controller.sprints">
+                                        <option value="">--Select--</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Status:</label>
+                                    <select required class="form-control" ng-model="controller.req.status.id" ng-options="cat.id as cat.condition for cat in controller.statuses">
+                                        <option value="">--Select--</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Story:</label>
+                                    <input placeholder="story" ng-model="controller.req.requirementName" required class="form-control" />
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Description:</label>
+                                    <input placeholder="description" ng-model="controller.req.description" required class="form-control" />
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Acceptance Criteria:</label>
+                                    <input placeholder="acceptance criteria" ng-model="controller.req.acceptanceCriteria" required class="form-control" />
+                                </div>
+
+                                <button class="btn btn-success" ng-click="controller.updateRequirement()" data-dismiss="modal">Save</button>
+                                <a class="btn btn-default" data-dismiss="modal" href="#">Cancel</a>
+                            </form> <!--end tag for "addForm"-->
+
+                        </div> <!-- end tag modal-body -->
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div> <!-- end tag modal-content -->
+                </div> <!-- end tab modal-dialog -->
+            </div> <!-- end tag modalContainer -->
+        </div> <!-- end tag container-fuild -->
+        <!--</div>-->
+    </div>
+<div class="col-xs-2">
+</div>
+
+<!--<td>
+    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#{{req.id}}">Description</a>
+        <div id="{{req.id}}" class="accordion-body collapse">
+            <div class="accordion-inner">
+                {{req.description}}
+            </div>
+        </div>
+</td>-->

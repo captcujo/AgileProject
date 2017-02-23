@@ -1,0 +1,143 @@
+﻿<div class="col-xs-2">
+</div>
+<div class="col-xs-8">
+    <br>
+    <div class="jumbotron">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr><th><h3>Product Backlog</h3></tr>
+                <tr></tr>
+                <tr><th><h3>Stories</h3></th>
+                    <th></th>
+                    <th></th>
+                    <th><button class="btn btn-success" data-toggle="modal" data-target="#modalAdd" ng-click="controller.clearForm()">Add New Story</button></th>
+                </tr>
+                <tr>
+                    <th>Story</th>
+                    <th>Assigned to</th>
+                </tr>
+            </thead>
+            <tbody id='table'>
+                <tr ng-repeat="story in controller.storiesByProduct">
+                    <td>{{story.requirementName}}</td>
+                    <td>{{story.sprint.sprintName}}</td>
+                    <td><button id="{{story.id}}" class="btn-sm btn-success" data-toggle="modal" data-target="#modalEdit" ng-click="controller.prefillStory(story.id)">Reassign Story</button></td>
+                    <td><button id="{{story.id}}" class="btn-sm btn-danger" data-toggle="modal" data-target="#modalDeleteWarning" ng-click="controller.prefillStory(story.id)">Delete</button></td>
+                <!--<tr ng-repeat="story in controller.stories">
+                    <td>{{story.requirementName}}</td>
+                    <td>{{story.sprint.sprintName}}</td>
+                    <td><button id="{{story.id}}" class="btn-sm btn-success" data-toggle="modal" data-target="#modalEdit" ng-click="controller.prefillStory(story.id)">Reassign Story</button></td>
+                    <td><button id="{{story.id}}" class="btn-sm btn-danger" ng-click="controller.deleteStory(story.id)">Delete</button></td>
+                </tr>-->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div id="modalDeleteWarning" class="modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <h4>Are you sure you want to delete? "{{controller.story.requirementName}}"</h4>
+            <div class="modal-body">                            
+                <button class="btn btn-danger" ng-click="controller.deleteStory(story.id)" data-dismiss="modal">Continue</button>
+                <a class="btn btn-default" data-dismiss="modal" href="">Cancel</a>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="close" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="container-fluid">
+    <div id="modalEdit" class="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+
+                    <form>
+                        <div class="form-group">
+                            <label>Sprint presently assigned to:</label>
+                            <select required class="form-control" ng-model="controller.story.sprint.id" ng-options="cat.id as cat.sprintName for cat in controller.sprints">
+                                <option value="">--Select--</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="Title">Story Name:</label>
+                            <input placeholder="story name" ng-model="controller.story.requirementName" required class="form-control" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="Title">Story description:</label>
+                            <input placeholder="story description" ng-model="controller.story.description" required class="form-control" />
+                        </div>
+
+                        <button class="btn-sm btn-success" data-dismiss="modal" ng-click="controller.assignUpdateStory()">Assign/Update story</button>
+                        <button class="btn-sm btn-default" data-dismiss="modal" href="#">Cancel</button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div id="modalAdd" class="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+
+                    <h1>Story Form</h1>
+                    <form id=addForm>
+                        <div class="form-group">
+                            <label>Sprint:</label>
+                            <select required class="form-control" ng-model="controller.story.sprint.id" ng-options="cat.id as cat.sprintName for cat in controller.sprints">
+                                <option value="">--Select--</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Status:</label>
+                            <select required class="form-control" ng-model="controller.story.status.id" ng-options="cat.id as cat.condition for cat in controller.statuses">
+                                <option value="">--Select--</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Story:</label>
+                            <input placeholder="story" ng-model="controller.story.requirementName" required class="form-control" />
+                        </div>
+
+                        <div class="form-group">
+                            <label>Description:</label>
+                            <input placeholder="description" ng-model="controller.story.description" required class="form-control" />
+                        </div>
+
+                        <div class="form-group">
+                            <label>Acceptance Criteria:</label>
+                            <input placeholder="acceptance criteria" ng-model="controller.story.acceptanceCriteria" required class="form-control" />
+                        </div>
+
+                        <button class="btn btn-success" ng-click="controller.addStory()" data-dismiss="modal">Save</button>
+                        <a class="btn btn-default" data-dismiss="modal" href="#">Cancel</a>
+                    </form> <!--end tag for "addForm"-->
+
+                </div> <!-- end tag modal-body -->
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div> <!-- end tag modal-content -->
+        </div> <!-- end tab modal-dialog -->
+    </div> <!-- end tag modalContainer -->
+</div> <!-- end tag container-fuild -->
+
+<div class="col-xs-2">
+</div>

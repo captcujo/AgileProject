@@ -1,0 +1,107 @@
+﻿<div class="col-xs-2">
+</div>
+<div class="col-xs-8">
+
+    <div class="jumbotron">
+        <table class="table table-striped">
+            <thead>
+                <tr><th>Story: {{controller.story.requirementName}}</th></tr>
+                <tr>
+                    <th>Tasks</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody id='table'>
+                <tr ng-repeat="task in controller.tasks">
+                    <td>{{task.taskName}}</td>
+                    <td><a data-toggle="modal" data-target="#modalDescription" ng-click="controller.preFillTaskForm(task.id)">Description</a></td>
+
+                    <td><button class="btn-sm btn-success" data-toggle="modal" data-target="#modalEditAdd" ng-click="controller.preFillTaskForm(task.id)">Edit</button></td>
+                    <td><button class="btn-sm btn-danger" data-toggle="modal" data-target="#modalDeleteWarningContainer" ng-click="controller.preFillTaskForm(task.id)">Delete</button></td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td><button class="btn btn-success" data-toggle="modal" data-target="#modalEditAdd" ng-click="controller.clearForm()">Add Task</button></td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+
+    <div id="modalDescription" class="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <p style="font-size:large"><strong>Task description:</strong> {{controller.task.description}}</p>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="modalDeleteWarningContainer" class="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <h4>  Are you sure you want to delete? "{{controller.task.taskName}}"</h4>
+                <div class="modal-body">
+                    <button class="btn btn-danger" ng-click="controller.deleteTask(controller.task.id)" data-dismiss="modal">Yes, Delete</button>
+                    <a class="btn btn-default" data-dismiss="modal" href="">Cancel</a>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div id="modalEditAdd" class="modal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body">
+
+                        <h1>Task Form</h1>
+                        <form id=addForm>
+
+                            <div class="form-group">
+                                <label>Story:</label>
+                                <select required class="form-control" ng-model="controller.task.story.id" ng-options="cat.id as cat.requirementName for cat in controller.stories">
+                                    <option value="">--Select--</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Task:</label>
+                                <input placeholder="task name" ng-model="controller.task.taskName" required class="form-control" />
+                            </div>
+
+                            <div class="form-group">
+                                <label>Description:</label>
+                                <input placeholder="task description" ng-model="controller.task.description" required class="form-control" />
+                            </div>
+
+                            <button class="btn btn-success" ng-click="controller.updateTask()" data-dismiss="modal">Save</button>
+                            <a class="btn btn-default" data-dismiss="modal" href="#">Cancel</a>
+                        </form> <!--end tag for "addForm"-->
+
+                    </div> <!-- end tag modal-body -->
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div> <!-- end tag modal-content -->
+            </div> <!-- end tab modal-dialog -->
+        </div> <!-- end tag modalContainer -->
+    </div> <!-- end tag container-fuild -->
+
+
+</div>
+<div class="col-xs-2">
+</div>
